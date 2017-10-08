@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/background"
+    tools:context="com.example.robin.LoginActivity">
+
+    <ImageView
+        android:id="@+id/image_appicon"
+        android:layout_marginTop="30dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:src="@drawable/app_icon"
+        android:layout_centerHorizontal="true"
+        android:scaleType="center"/>
+
+    <TextView
+        android:id="@+id/text_appname"
+        android:layout_width="wrap_content"
+        android:padding="10dp"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/image_appicon"
+        android:textStyle="bold"
+        android:textSize="45sp"
+        android:layout_centerHorizontal="true"
+        android:textColor="@color/colorFont"
+        android:text="ROBIN "/>
+
+    <EditText
+        android:layout_below="@id/text_appname"
+        android:id="@+id/edittext_username"
+        android:layout_marginLeft="25dp"
+        android:textColorHint="@color/colorHintText"
+        android:layout_marginRight="25dp"
+        android:hint="Username"
+        android:textColor="@color/colorFont"
+        android:drawableStart="@drawable/username_drawable"
+        android:drawablePadding="5dp"
+        android:layout_marginTop="30dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content" />
+
+    <EditText
+        android:id="@+id/edittext_password"
+        android:hint="Password"
+        android:inputType="textPassword"
+        android:textColorHint="@color/colorHintText"
+        android:layout_width="match_parent"
+        android:textColor="@color/colorFont"
+        android:drawableStart="@drawable/password_drawable"
+        android:drawablePadding="5dp"
+        android:layout_margin="25dp"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/edittext_username"/>
+
+    <Button
+        android:id="@+id/button_login"
+        android:layout_centerHorizontal="true"
+        android:textStyle="bold"
+        android:padding="10dp"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:backgroundTint="@color/colorButton"
+        android:onClick="login"
+        android:layout_below="@id/edittext_password"
+        android:text="LOGIN"/>
+
+    <Button
+        android:layout_marginTop="15dp"
+        android:layout_centerHorizontal="true"
+        android:layout_width="wrap_content"
+        android:textStyle="bold"
+        android:padding="10dp"
+        android:layout_height="wrap_content"
+        android:backgroundTint="@color/colorButtonSecondary"
+        android:layout_below="@id/button_login"
+        android:text="NEW USER ?"/>
+    
+</RelativeLayout>
