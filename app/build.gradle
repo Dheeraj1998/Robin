@@ -30,11 +30,11 @@ dependencies {
     })
 
     compile 'com.android.support:appcompat-v7:25.3.1'
-    compile 'com.android.support.constraint:constraint-layout:1.0.2'
-    compile 'com.android.support:recyclerview-v7:23.1.1'
+    compile 'com.android.support:recyclerview-v7:25.3.1'
     compile 'ai.api:sdk:2.0.7@aar'
     compile 'ai.api:libai:1.4.8'
     compile 'com.google.code.gson:gson:2.7'
     compile 'commons-io:commons-io:2.4'
+
     testCompile 'junit:junit:4.12'
 }
