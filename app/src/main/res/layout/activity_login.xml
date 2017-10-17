@@ -13,7 +13,7 @@
         android:layout_centerHorizontal="true"
         android:layout_marginTop="30dp"
         android:scaleType="center"
-        android:src="@drawable/app_icon"/>
+        android:src="@drawable/app_icon" />
 
     <TextView
         android:id="@+id/text_appname"
@@ -25,7 +25,7 @@
         android:text="ROBIN "
         android:textColor="@color/colorFont"
         android:textSize="45sp"
-        android:textStyle="bold"/>
+        android:textStyle="bold" />
 
     <EditText
         android:id="@+id/edittext_username"
@@ -56,7 +56,7 @@
         android:inputType="textPassword"
         android:padding="10dp"
         android:textColor="@color/colorFont"
-        android:textColorHint="@color/colorHintText"/>
+        android:textColorHint="@color/colorHintText" />
 
     <Button
         android:id="@+id/button_login"
@@ -68,7 +68,7 @@
         android:onClick="login"
         android:padding="10dp"
         android:text="LOGIN"
-        android:textStyle="bold"/>
+        android:textStyle="bold" />
 
     <Button
         android:layout_width="wrap_content"
@@ -79,6 +79,6 @@
         android:backgroundTint="@color/colorButtonSecondary"
         android:padding="10dp"
         android:text="NEW USER ?"
-        android:textStyle="bold"/>
-    
+        android:textStyle="bold" />
+
 </RelativeLayout>
