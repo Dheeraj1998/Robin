@@ -2,8 +2,9 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:orientation="vertical"
     android:layout_height="match_parent"
+    android:background="@drawable/chat_background"
+    android:orientation="vertical"
     tools:context="com.example.robin.ChatActivity">
 
     <android.support.v7.widget.RecyclerView
@@ -18,39 +19,48 @@
     <View
         android:layout_width="match_parent"
         android:layout_height="2dp"
-        android:background="#dfdfdf"
-        android:layout_marginBottom="0dp" />
+        android:layout_marginBottom="0dp"
+        android:background="#dfdfdf" />
 
     <LinearLayout
         android:id="@+id/layout_chatbox"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:orientation="horizontal"
+        android:background="#D84315"
         android:minHeight="48dp"
-        android:background="#ffffff">
+        android:orientation="horizontal">
 
         <EditText
             android:id="@+id/edittext_chatbox"
-            android:hint="Enter message"
-            android:background="@android:color/transparent"
-            android:layout_gravity="center"
-            android:layout_marginLeft="16dp"
-            android:layout_marginRight="16dp"
             android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_gravity="center"
             android:layout_weight="1"
-            android:layout_height="wrap_content"
-            android:maxLines="6"/>
+            android:background="#424242"
+            android:hint="Enter message"
+            android:maxLines="6"
+            android:padding="10dp"
+            android:textColor="@color/colorFont"
+            android:textColorHint="@color/colorHintText"/>
 
-        <Button
-            android:text="SEND"
-            android:onClick="sendMessage"
-            android:textSize="14sp"
-            android:background="?attr/selectableItemBackground"
-            android:clickable="true"
+        <View
+            android:layout_width="1dp"
+            android:layout_height="match_parent"
+            android:background="#FFFFFF"
+        />
+        
+        <TextView
             android:layout_width="64dp"
             android:layout_height="48dp"
+            android:layout_gravity="bottom"
+            android:background="?attr/selectableItemBackground"
+            android:clickable="true"
             android:gravity="center"
-            android:layout_gravity="bottom" />
+            android:onClick="sendMessage"
+            android:text="SEND"
+            android:textColor="@color/colorFont"
+            android:textColorHint="@color/colorHintText"
+            android:textSize="14sp" />
 
     </LinearLayout>
 

@@ -1,5 +1,9 @@
 package com.example.robin;
 
+import android.app.AlarmManager;
+import android.app.PendingIntent;
+import android.content.Intent;
+import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.speech.tts.TextToSpeech;
@@ -12,6 +16,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import java.util.ArrayList;
+import java.util.Calendar;
 import java.util.List;
 
 import ai.api.AIDataService;
@@ -22,7 +27,7 @@ import ai.api.model.AIRequest;
 import ai.api.model.AIResponse;
 import ai.api.model.Result;
 
-// Import API.AI library
+import static android.R.attr.action;
 
 public class ChatActivity extends AppCompatActivity implements TextToSpeech.OnInitListener {
     private List<Message> messageList = new ArrayList<>();
@@ -30,6 +35,9 @@ public class ChatActivity extends AppCompatActivity implements TextToSpeech.OnIn
     private MessageAdapter mAdapter;
     private TextView message_entered;
     private TextToSpeech tts;
+
+    private PendingIntent pendingIntent;
+    private AlarmManager alarmManager;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -41,6 +49,8 @@ public class ChatActivity extends AppCompatActivity implements TextToSpeech.OnIn
 
         message_entered = (TextView) findViewById(R.id.edittext_chatbox);
         recyclerView = (RecyclerView) findViewById(R.id.reyclerview_message_list);
+
+        alarmManager = (AlarmManager) getSystemService(ALARM_SERVICE);
 
         mAdapter = new MessageAdapter(messageList);
         RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(getApplicationContext());
@@ -82,6 +92,7 @@ public class ChatActivity extends AppCompatActivity implements TextToSpeech.OnIn
             // Do nothing!
         }
 
+        // This is the ASync task for handling the task of setting up the API.AI query
         final AsyncTask<AIRequest, Integer, AIResponse> task =
                 new AsyncTask<AIRequest, Integer, AIResponse>() {
                     private AIError aiError;
@@ -118,6 +129,57 @@ public class ChatActivity extends AppCompatActivity implements TextToSpeech.OnIn
         Log.i("custom", "Action: " + result.getAction());
         final String speech = result.getFulfillment().getSpeech();
         Log.i("custom", "Speech: " + speech);
+
+        // Check if the action is 'alarm.set'
+        if(result.getAction().equals("alarm.set")){
+            AlarmManager alarmManager = (AlarmManager) getSystemService(ALARM_SERVICE);
+            Intent myIntent = new Intent(ChatActivity.this, AlarmReceiver.class);
+            PendingIntent  pendingIntent = PendingIntent.getBroadcast(ChatActivity.this, 0, myIntent, 0);
+
+            Log.i("custom", result.getTimeParameter("time").getTime() + "");
+
+            alarmManager.setExact(AlarmManager.RTC_WAKEUP, result.getTimeParameter("time").getTime(), pendingIntent);
+        }
+
+        else if(result.getAction().equals("web.search")){
+            Uri uri = Uri.parse("http://www.google.com/#q=" + result.getStringParameter("q"));
+
+            Intent intent = new Intent(Intent.ACTION_VIEW, uri);
+            startActivity(intent);
+        }
+
+        else if(result.getAction().equals("launch.app")){
+            String app_name = result.getStringParameter("app_name").toLowerCase();
+            Log.i("custom", app_name);
+
+            // Open gallery
+            if(app_name.equals("photos") || app_name.equals("gallery")){
+                final int RESULT_GALLERY = 0;
+
+                Intent galleryIntent = new Intent(Intent.ACTION_PICK, android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
+                startActivityForResult(galleryIntent , RESULT_GALLERY);
+            }
+
+            // Open camera app
+            if(app_name.equals("camera")){
+                Intent intent = new Intent("android.media.action.IMAGE_CAPTURE");
+                startActivity(intent);
+            }
+
+            // Open messages app
+            if(app_name.equals("messages")){
+                Intent sendIntent = new Intent(Intent.ACTION_VIEW);
+                sendIntent.setData(Uri.parse("sms:"));
+                startActivity(sendIntent);
+            }
+
+            // Open Playstore app
+            if(app_name.equals("app store") || app_name.equals("playstore")){
+                Intent sendIntent = new Intent(Intent.ACTION_VIEW);
+                sendIntent.setData(Uri.parse("market:"));
+                startActivity(sendIntent);
+            }
+        }
 
         Message temp = new Message();
         temp.setMessage_content(speech);
