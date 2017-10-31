@@ -5,14 +5,14 @@
 
     <TextView
         android:id="@+id/text_message_body"
-        android:text="hello, hello!"
-        android:background="@drawable/rounded_rectangle_blue"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        android:layout_alignParentEnd="true"
+        android:layout_marginEnd="8dp"
+        android:background="@drawable/rounded_rectangle_blue"
         android:maxWidth="240dp"
         android:padding="8dp"
-        android:textColor="#ffffff"
-        android:layout_alignParentEnd="true"
-        android:layout_marginEnd="8dp" />
+        android:text="hello, hello!"
+        android:textColor="#ffffff" />
 
 </RelativeLayout>
