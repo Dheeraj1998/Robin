@@ -11,6 +11,8 @@ alarms, search on Google and other basic operations like opening the system appl
 
 <img align="right" height="700" src="https://github.com/Dheeraj1998/Robin/blob/master/screenshots/screenshot-2.png">
 
+<br>
+
 <p align="center">
   <img height="700" src="https://github.com/Dheeraj1998/Robin/blob/master/screenshots/screenshot-3.png">
 </p>
