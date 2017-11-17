@@ -7,8 +7,10 @@ intent which included the capability of small-talk. The further training has bee
 alarms, search on Google and other basic operations like opening the system application such as Camera and Gallery.
 
 # Screenshots
-![Screenshot 1]()
+<img align="left" height="700" src="https://github.com/Dheeraj1998/Robin/blob/master/screenshots/screenshot-1.png">
 
-![Screenshot 2]()
+<img align="right" height="700" src="https://github.com/Dheeraj1998/Robin/blob/master/screenshots/screenshot-2.png">
 
-![Screenshot 3]()
+<p align="center">
+  <img height="700" src="https://github.com/Dheeraj1998/Robin/blob/master/screenshots/screenshot-3.png">
+</p>
