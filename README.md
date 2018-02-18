@@ -7,12 +7,5 @@ intent which included the capability of small-talk. The further training has bee
 alarms, search on Google and other basic operations like opening the system application such as Camera and Gallery.
 
 # Screenshots
-<img align="left" height="700" src="https://github.com/Dheeraj1998/Robin/blob/master/screenshots/screenshot-1.png">
 
-<img align="right" height="700" src="https://github.com/Dheeraj1998/Robin/blob/master/screenshots/screenshot-2.png">
-
-
-<p align="center">
-  &nbsp;
-  <img height="700" src="https://github.com/Dheeraj1998/Robin/blob/master/screenshots/screenshot-3.png">
-</p>
+<img src="screenshots/screenshot-1.png" width="33%"></img> <img src="screenshots/screenshot-2.png" width="33%"></img> <img src="screenshots/screenshot-3.png" width="33%"></img> 
