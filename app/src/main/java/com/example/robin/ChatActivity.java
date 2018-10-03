@@ -12,11 +12,13 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.View;
+import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 
 import ai.api.AIDataService;
 import ai.api.AIServiceException;
@@ -27,6 +29,7 @@ import ai.api.model.AIResponse;
 import ai.api.model.Result;
 
 public class ChatActivity extends AppCompatActivity implements TextToSpeech.OnInitListener {
+    private LinearLayout chat_activity;
     private List<Message> messageList = new ArrayList<>();
     private RecyclerView recyclerView;
     private MessageAdapter mAdapter;
@@ -40,6 +43,8 @@ public class ChatActivity extends AppCompatActivity implements TextToSpeech.OnIn
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_chat);
+
+        chat_activity = (LinearLayout) findViewById(R.id.chat_activity_layout);
 
         tts = new TextToSpeech(this, this);
         tts.setSpeechRate(Float.parseFloat("0.8"));
@@ -171,6 +176,24 @@ public class ChatActivity extends AppCompatActivity implements TextToSpeech.OnIn
                 Intent sendIntent = new Intent(Intent.ACTION_VIEW);
                 sendIntent.setData(Uri.parse("market:"));
                 startActivity(sendIntent);
+            }
+        } else if (result.getAction().equals("change.background")) {
+            final int random = new Random().nextInt(7);
+            Log.i("custom", "assadasd" + random);
+            if (random == 0) {
+                chat_activity.setBackgroundResource(R.drawable.chat_background_1);
+            } else if (random == 1) {
+                chat_activity.setBackgroundResource(R.drawable.chat_background_2);
+            } else if (random == 2) {
+                chat_activity.setBackgroundResource(R.drawable.chat_background_3);
+            } else if (random == 3) {
+                chat_activity.setBackgroundResource(R.drawable.chat_background_4);
+            } else if (random == 4) {
+                chat_activity.setBackgroundResource(R.drawable.chat_background_5);
+            } else if (random == 5) {
+                chat_activity.setBackgroundResource(R.drawable.chat_background_6);
+            } else if (random == 6) {
+                chat_activity.setBackgroundResource(R.drawable.chat_background_7);
             }
         }
 

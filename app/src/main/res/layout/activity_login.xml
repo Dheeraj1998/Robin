@@ -70,15 +70,15 @@
         android:text="LOGIN"
         android:textStyle="bold" />
 
-    <Button
+    <TextView
+        android:layout_alignParentBottom="true"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@id/button_login"
+        android:padding="@dimen/mic_button_halo_radius_min"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="15dp"
-        android:backgroundTint="@color/colorButtonSecondary"
-        android:padding="10dp"
-        android:text="NEW USER ?"
+        android:text="Not yet registered? Sign up now!"
+        android:textSize="18sp"
+        android:textColor="@color/colorAccent"
         android:textStyle="bold" />
 
 </RelativeLayout>

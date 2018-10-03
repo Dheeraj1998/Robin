@@ -1,8 +1,9 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/chat_activity_layout"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/chat_background"
+    android:background="@drawable/chat_background_1"
     android:orientation="vertical"
     tools:context="com.example.robin.ChatActivity">
 
@@ -12,7 +13,7 @@
         android:layout_height="0dp"
         android:layout_weight="1"
         android:overScrollMode="never"
-        android:paddingBottom="5dp"></android.support.v7.widget.RecyclerView>
+        android:paddingBottom="5dp" />
 
     <View
         android:layout_width="match_parent"
