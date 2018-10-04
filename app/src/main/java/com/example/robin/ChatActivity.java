@@ -17,6 +17,8 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import bsh.*;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
@@ -37,6 +39,7 @@ public class ChatActivity extends AppCompatActivity implements TextToSpeech.OnIn
     private TextView message_entered;
     private TextToSpeech tts;
     private String query_message;
+    private Interpreter interpreter;
 
     private PendingIntent pendingIntent;
     private AlarmManager alarmManager;
@@ -130,6 +133,36 @@ public class ChatActivity extends AppCompatActivity implements TextToSpeech.OnIn
             message_entered.setText("");
 
             mAdapter.notifyDataSetChanged();
+        } else if (query_message.startsWith("calculate") || query_message.startsWith("Calculate")) {
+            String speech = "";
+
+            Message temp = new Message();
+            temp.setMessage_content(query_message);
+            temp.setMessage_type(1);
+            messageList.add(temp);
+
+            mAdapter.notifyDataSetChanged();
+
+            interpreter = new Interpreter();
+
+            try {
+                String eval_expression = query_message.substring(9).trim();
+                interpreter.eval("result = " + eval_expression);
+                speech = "The result is: " + interpreter.get("result");
+            } catch (EvalError evalError) {
+                speech = "The entered expression is invalid!";
+                evalError.printStackTrace();
+            }
+
+            temp = new Message();
+            temp.setMessage_content(speech);
+            temp.setMessage_type(2);
+            messageList.add(temp);
+
+            tts.speak(speech, TextToSpeech.QUEUE_FLUSH, null);
+            message_entered.setText("");
+
+            mAdapter.notifyDataSetChanged();
         } else {
             Message temp = new Message();
             temp.setMessage_content(query_message);
@@ -173,10 +206,7 @@ public class ChatActivity extends AppCompatActivity implements TextToSpeech.OnIn
 
     public void onResult(final AIResponse response) {
         final Result result = response.getResult();
-        Log.i("custom", "Resolved query: " + result.getResolvedQuery());
-        Log.i("custom", "Action: " + result.getAction());
         final String speech = result.getFulfillment().getSpeech();
-        Log.i("custom", "Speech: " + speech);
 
         // Check if the action is 'alarm.set'
         if (result.getAction().equals("alarm.set")) {
@@ -214,31 +244,33 @@ public class ChatActivity extends AppCompatActivity implements TextToSpeech.OnIn
                 startActivity(sendIntent);
             }
 
-            // Open Playstore app
+            // Open Play-store app
             if (app_name.equals("app store") || app_name.equals("playstore")) {
-
-                Intent sendIntent = new Intent(Intent.ACTION_VIEW);
-                sendIntent.setData(Uri.parse(
-                        "https://play.google.com/store/apps/topic?id=editors_choice"));
-                startActivity(sendIntent);
+                startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("https://play.google.com/store/apps")));
             }
         } else if (result.getAction().equals("change.background")) {
-            final int random = new Random().nextInt(7);
+            final int random = new Random().nextInt(10);
 
             if (random == 0) {
-                chat_activity.setBackgroundResource(R.drawable.chat_background_1);
+                chat_activity.setBackgroundResource(R.color.background_1);
             } else if (random == 1) {
-                chat_activity.setBackgroundResource(R.drawable.chat_background_2);
+                chat_activity.setBackgroundResource(R.color.background_2);
             } else if (random == 2) {
-                chat_activity.setBackgroundResource(R.drawable.chat_background_3);
+                chat_activity.setBackgroundResource(R.color.background_3);
             } else if (random == 3) {
-                chat_activity.setBackgroundResource(R.drawable.chat_background_4);
+                chat_activity.setBackgroundResource(R.color.background_4);
             } else if (random == 4) {
-                chat_activity.setBackgroundResource(R.drawable.chat_background_5);
+                chat_activity.setBackgroundResource(R.color.background_5);
             } else if (random == 5) {
-                chat_activity.setBackgroundResource(R.drawable.chat_background_6);
+                chat_activity.setBackgroundResource(R.color.background_6);
             } else if (random == 6) {
-                chat_activity.setBackgroundResource(R.drawable.chat_background_7);
+                chat_activity.setBackgroundResource(R.color.background_7);
+            } else if (random == 7) {
+                chat_activity.setBackgroundResource(R.color.background_8);
+            } else if (random == 8) {
+                chat_activity.setBackgroundResource(R.color.background_9);
+            } else if (random == 9) {
+                chat_activity.setBackgroundResource(R.color.background_10);
             }
         } else if (result.getAction().equals("navigate.place")) {
             Uri gmmIntentUri = Uri.parse("google.navigation:q=" + result.getStringParameter("geo-city"));
@@ -246,8 +278,6 @@ public class ChatActivity extends AppCompatActivity implements TextToSpeech.OnIn
             mapIntent.setPackage("com.google.android.apps.maps");
             startActivity(mapIntent);
         } else if (result.getAction().equals("remember.this")) {
-            Log.i("custom", query_message);
-
             SharedPreferences preferences = getApplicationContext().getSharedPreferences("RememberItems", 0);
             SharedPreferences.Editor editor = preferences.edit();
 
