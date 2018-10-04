@@ -3,6 +3,7 @@ package com.example.robin;
 import android.app.AlarmManager;
 import android.app.PendingIntent;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -35,6 +36,7 @@ public class ChatActivity extends AppCompatActivity implements TextToSpeech.OnIn
     private MessageAdapter mAdapter;
     private TextView message_entered;
     private TextToSpeech tts;
+    private String query_message;
 
     private PendingIntent pendingIntent;
     private AlarmManager alarmManager;
@@ -76,10 +78,58 @@ public class ChatActivity extends AppCompatActivity implements TextToSpeech.OnIn
 
         final AIRequest aiRequest = new AIRequest();
 
-        String query_message = message_entered.getText().toString();
+        query_message = message_entered.getText().toString();
 
         if (query_message.length() == 0) {
             Toast.makeText(getApplicationContext(), "Enter something!", Toast.LENGTH_SHORT).show();
+        } else if (query_message.equalsIgnoreCase("what did you remember")) {
+            Message temp = new Message();
+            temp.setMessage_content(query_message);
+            temp.setMessage_type(1);
+            messageList.add(temp);
+
+            mAdapter.notifyDataSetChanged();
+
+            SharedPreferences preferences = getApplicationContext().getSharedPreferences("RememberItems", 0);
+            String speech = preferences.getString("remember_message", "No, I don't think you asked me to remember anything.");
+
+            if(!speech.equals("No, I don't think you asked me to remember anything.")){
+                speech = "You asked me to remember this: \n\n" + speech;
+            }
+
+            temp = new Message();
+            temp.setMessage_content(speech);
+            temp.setMessage_type(2);
+            messageList.add(temp);
+
+            tts.speak(speech, TextToSpeech.QUEUE_FLUSH, null);
+            message_entered.setText("");
+
+            mAdapter.notifyDataSetChanged();
+        } else if (query_message.equalsIgnoreCase("forget")) {
+            Message temp = new Message();
+            temp.setMessage_content(query_message);
+            temp.setMessage_type(1);
+            messageList.add(temp);
+
+            mAdapter.notifyDataSetChanged();
+
+            SharedPreferences preferences = getApplicationContext().getSharedPreferences("RememberItems", 0);
+            SharedPreferences.Editor editor = preferences.edit();
+
+            editor.clear();
+            String speech = "I have forgot!";
+            editor.apply();
+
+            temp = new Message();
+            temp.setMessage_content(speech);
+            temp.setMessage_type(2);
+            messageList.add(temp);
+
+            tts.speak(speech, TextToSpeech.QUEUE_FLUSH, null);
+            message_entered.setText("");
+
+            mAdapter.notifyDataSetChanged();
         } else {
             Message temp = new Message();
             temp.setMessage_content(query_message);
@@ -88,10 +138,6 @@ public class ChatActivity extends AppCompatActivity implements TextToSpeech.OnIn
 
             aiRequest.setQuery(query_message);
             mAdapter.notifyDataSetChanged();
-        }
-
-        if (aiRequest == null) {
-            // Do nothing!
         }
 
         // This is the ASync task for handling the task of setting up the API.AI query
@@ -138,8 +184,6 @@ public class ChatActivity extends AppCompatActivity implements TextToSpeech.OnIn
             Intent myIntent = new Intent(ChatActivity.this, AlarmReceiver.class);
             PendingIntent pendingIntent = PendingIntent.getBroadcast(ChatActivity.this, 0, myIntent, 0);
 
-            Log.i("custom", result.getTimeParameter("time").getTime() + "");
-
             alarmManager.setExact(AlarmManager.RTC_WAKEUP, result.getTimeParameter("time").getTime(), pendingIntent);
         } else if (result.getAction().equals("web.search")) {
             Uri uri = Uri.parse("http://www.google.com/#q=" + result.getStringParameter("q"));
@@ -148,7 +192,6 @@ public class ChatActivity extends AppCompatActivity implements TextToSpeech.OnIn
             startActivity(intent);
         } else if (result.getAction().equals("launch.app")) {
             String app_name = result.getStringParameter("app_name").toLowerCase();
-            Log.i("custom", app_name);
 
             // Open gallery
             if (app_name.equals("photos") || app_name.equals("gallery")) {
@@ -173,13 +216,15 @@ public class ChatActivity extends AppCompatActivity implements TextToSpeech.OnIn
 
             // Open Playstore app
             if (app_name.equals("app store") || app_name.equals("playstore")) {
+
                 Intent sendIntent = new Intent(Intent.ACTION_VIEW);
-                sendIntent.setData(Uri.parse("market:"));
+                sendIntent.setData(Uri.parse(
+                        "https://play.google.com/store/apps/topic?id=editors_choice"));
                 startActivity(sendIntent);
             }
         } else if (result.getAction().equals("change.background")) {
             final int random = new Random().nextInt(7);
-            Log.i("custom", "assadasd" + random);
+
             if (random == 0) {
                 chat_activity.setBackgroundResource(R.drawable.chat_background_1);
             } else if (random == 1) {
@@ -195,6 +240,20 @@ public class ChatActivity extends AppCompatActivity implements TextToSpeech.OnIn
             } else if (random == 6) {
                 chat_activity.setBackgroundResource(R.drawable.chat_background_7);
             }
+        } else if (result.getAction().equals("navigate.place")) {
+            Uri gmmIntentUri = Uri.parse("google.navigation:q=" + result.getStringParameter("geo-city"));
+            Intent mapIntent = new Intent(Intent.ACTION_VIEW, gmmIntentUri);
+            mapIntent.setPackage("com.google.android.apps.maps");
+            startActivity(mapIntent);
+        } else if (result.getAction().equals("remember.this")) {
+            Log.i("custom", query_message);
+
+            SharedPreferences preferences = getApplicationContext().getSharedPreferences("RememberItems", 0);
+            SharedPreferences.Editor editor = preferences.edit();
+
+            editor.clear();
+            editor.putString("remember_message", query_message);
+            editor.apply();
         }
 
         Message temp = new Message();
