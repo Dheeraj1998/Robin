@@ -9,7 +9,7 @@
         android:layout_height="wrap_content"
         android:layout_alignParentEnd="true"
         android:layout_marginEnd="8dp"
-        android:background="@drawable/rounded_rectangle_blue"
+        android:background="@drawable/rounded_rectangle_green"
         android:maxWidth="240dp"
         android:padding="8dp"
         android:text="hello, hello!"

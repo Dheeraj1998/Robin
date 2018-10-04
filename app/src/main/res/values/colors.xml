@@ -18,4 +18,20 @@
     <color name="background_8">#3A4F41</color>
     <color name="background_9">#05668D</color>
     <color name="background_10">#7D2E68</color>
+    
+    <color name="intro_bg_1">#70C1B3</color>
+    <color name="intro_btn_1">#247BA0</color>
+
+    <color name="intro_bg_2">#247BA0</color>
+    <color name="intro_btn_2">#331832</color>
+
+    <color name="intro_bg_3">#331832</color>
+    <color name="intro_btn_3">#F25F5C</color>
+
+    <color name="intro_bg_4">#F25F5C</color>
+    <color name="intro_btn_4">#50514F</color>
+
+    <color name="intro_bg_5">#50514F</color>
+    <color name="intro_btn_5">#0D0A0B</color>
+
 </resources>
