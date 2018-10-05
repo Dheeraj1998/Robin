@@ -17,8 +17,6 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import bsh.*;
-
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
@@ -30,6 +28,8 @@ import ai.api.model.AIError;
 import ai.api.model.AIRequest;
 import ai.api.model.AIResponse;
 import ai.api.model.Result;
+import bsh.EvalError;
+import bsh.Interpreter;
 
 public class ChatActivity extends AppCompatActivity implements TextToSpeech.OnInitListener {
     private LinearLayout chat_activity;
@@ -134,7 +134,8 @@ public class ChatActivity extends AppCompatActivity implements TextToSpeech.OnIn
 
             mAdapter.notifyDataSetChanged();
         } else if (query_message.startsWith("calculate") || query_message.startsWith("Calculate")) {
-            String speech = "";
+            String speech;
+            setTheme(R.style.SplashScreenTheme);
 
             Message temp = new Message();
             temp.setMessage_content(query_message);
@@ -253,24 +254,34 @@ public class ChatActivity extends AppCompatActivity implements TextToSpeech.OnIn
 
             if (random == 0) {
                 chat_activity.setBackgroundResource(R.color.background_1);
+                getWindow().setStatusBarColor(getResources().getColor(R.color.background_dk_1));
             } else if (random == 1) {
                 chat_activity.setBackgroundResource(R.color.background_2);
+                getWindow().setStatusBarColor(getResources().getColor(R.color.background_dk_2));
             } else if (random == 2) {
                 chat_activity.setBackgroundResource(R.color.background_3);
+                getWindow().setStatusBarColor(getResources().getColor(R.color.background_dk_3));
             } else if (random == 3) {
                 chat_activity.setBackgroundResource(R.color.background_4);
+                getWindow().setStatusBarColor(getResources().getColor(R.color.background_dk_4));
             } else if (random == 4) {
                 chat_activity.setBackgroundResource(R.color.background_5);
+                getWindow().setStatusBarColor(getResources().getColor(R.color.background_dk_5));
             } else if (random == 5) {
                 chat_activity.setBackgroundResource(R.color.background_6);
+                getWindow().setStatusBarColor(getResources().getColor(R.color.background_dk_6));
             } else if (random == 6) {
                 chat_activity.setBackgroundResource(R.color.background_7);
+                getWindow().setStatusBarColor(getResources().getColor(R.color.background_dk_7));
             } else if (random == 7) {
                 chat_activity.setBackgroundResource(R.color.background_8);
+                getWindow().setStatusBarColor(getResources().getColor(R.color.background_dk_8));
             } else if (random == 8) {
                 chat_activity.setBackgroundResource(R.color.background_9);
+                getWindow().setStatusBarColor(getResources().getColor(R.color.background_dk_9));
             } else if (random == 9) {
                 chat_activity.setBackgroundResource(R.color.background_10);
+                getWindow().setStatusBarColor(getResources().getColor(R.color.background_dk_10));
             }
         } else if (result.getAction().equals("navigate.place")) {
             Uri gmmIntentUri = Uri.parse("google.navigation:q=" + result.getStringParameter("geo-city"));

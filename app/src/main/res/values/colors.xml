@@ -1,23 +1,43 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="colorPrimary">#424242</color>
-    <color name="colorPrimaryDark">#424242</color>
+    <color name="colorPrimary">#8FBFE0</color>
+    <color name="colorPrimaryDark">#3689c2</color>
     <color name="colorAccent">#CFD8DC</color>
     <color name="colorFont">#FDFDFD</color>
     <color name="colorHintText">#FFF9C4</color>
     <color name="colorButton">#FFEB3B</color>
     <color name="colorButtonSecondary">#FF9800</color>
+    <color name="splashScreen">#191919</color>
 
     <color name="background_1">#8FBFE0</color>
+    <color name="background_dk_1">#3689c2</color>
+
     <color name="background_2">#7C77B9</color>
-    <color name="background_3">#F0F8EA</color>
+    <color name="background_dk_2">#504a91</color>
+
+    <color name="background_3">#E3B505</color>
+    <color name="background_dk_3">#907303</color>
+
     <color name="background_4">#C2F9BB</color>
+    <color name="background_dk_4">#36eb1f</color>
+
     <color name="background_5">#FFB400</color>
-    <color name="background_6">#3F88C5</color>
+    <color name="background_dk_5">#aa7800</color>
+
+    <color name="background_6">#F1E8B8</color>
+    <color name="background_dk_6">#d5ba2a</color>
+
     <color name="background_7">#D5A18E</color>
+    <color name="background_dk_7">#b96445</color>
+
     <color name="background_8">#3A4F41</color>
+    <color name="background_dk_8">#161e19</color>
+
     <color name="background_9">#05668D</color>
+    <color name="background_dk_9">#022b3b</color>
+
     <color name="background_10">#7D2E68</color>
+    <color name="background_dk_10">#3f1734</color>
     
     <color name="intro_bg_1">#70C1B3</color>
     <color name="intro_btn_1">#247BA0</color>
