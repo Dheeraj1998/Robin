@@ -21,15 +21,16 @@
         <activity
             android:name=".ChatActivity"
             android:screenOrientation="portrait"
-            android:theme="@style/FullScreenTheme" />
-
-        <activity
-            android:name=".IntroActivity"
-            android:theme="@style/SplashScreenTheme" >
+            android:theme="@style/FullScreenTheme" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
+        </activity>
+
+        <activity
+            android:name=".IntroActivity"
+            android:theme="@style/SplashScreenTheme" >
         </activity>
 
         <receiver android:name=".AlarmReceiver" />

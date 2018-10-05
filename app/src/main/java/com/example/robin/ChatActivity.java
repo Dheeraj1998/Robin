@@ -13,9 +13,13 @@ import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.View;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
+
+import com.skyfishjy.library.RippleBackground;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -49,6 +53,9 @@ public class ChatActivity extends AppCompatActivity implements TextToSpeech.OnIn
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_chat);
 
+        final RippleBackground rippleBackground = (RippleBackground)findViewById(R.id.app_icon_image);
+        rippleBackground.startRippleAnimation();
+
         chat_activity = (LinearLayout) findViewById(R.id.chat_activity_layout);
 
         tts = new TextToSpeech(this, this);
@@ -63,6 +70,31 @@ public class ChatActivity extends AppCompatActivity implements TextToSpeech.OnIn
         RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(getApplicationContext());
         recyclerView.setLayoutManager(mLayoutManager);
         recyclerView.setAdapter(mAdapter);
+    }
+
+    public void hideIcon(View view){
+        final RippleBackground rippleBackground = (RippleBackground) findViewById(R.id.app_icon_image);
+        Animation animFadeOut = AnimationUtils.loadAnimation(getApplicationContext(),R.anim.fade_out);
+
+        animFadeOut.setAnimationListener(new Animation.AnimationListener() {
+            @Override
+            public void onAnimationStart(Animation animation) {
+
+            }
+
+            @Override
+            public void onAnimationEnd(Animation animation) {
+                rippleBackground.stopRippleAnimation();
+                rippleBackground.setVisibility(View.GONE);
+            }
+
+            @Override
+            public void onAnimationRepeat(Animation animation) {
+
+            }
+        });
+
+        rippleBackground.startAnimation(animFadeOut);
     }
 
     @Override
@@ -82,6 +114,11 @@ public class ChatActivity extends AppCompatActivity implements TextToSpeech.OnIn
         final AIRequest aiRequest = new AIRequest();
 
         query_message = message_entered.getText().toString();
+
+        final RippleBackground rippleBackground = (RippleBackground) findViewById(R.id.app_icon_image);
+        if (rippleBackground.getVisibility() != View.GONE) {
+            hideIcon(getCurrentFocus());
+        }
 
         if (query_message.length() == 0) {
             Toast.makeText(getApplicationContext(), "Enter something!", Toast.LENGTH_SHORT).show();

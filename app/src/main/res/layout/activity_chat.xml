@@ -1,65 +1,104 @@
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:id="@+id/chat_activity_layout"
+<RelativeLayout xmlns:tools="http://schemas.android.com/tools"
+    xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:background="@color/background_1"
-    android:orientation="vertical"
-    tools:context="com.example.robin.ChatActivity">
+    android:layout_height="match_parent">
 
-    <android.support.v7.widget.RecyclerView
-        android:id="@+id/reyclerview_message_list"
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:tools="http://schemas.android.com/tools"
+        android:id="@+id/chat_activity_layout"
         android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="1"
-        android:overScrollMode="never"
-        android:paddingBottom="5dp" />
+        android:layout_height="match_parent"
+        android:background="@color/background_1"
+        android:orientation="vertical"
+        tools:context="com.example.robin.ChatActivity">
 
-    <View
-        android:layout_width="match_parent"
-        android:layout_height="2dp"
-        android:layout_marginBottom="0dp"
-        android:background="#dfdfdf" />
-
-    <LinearLayout
-        android:id="@+id/layout_chatbox"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="#D84315"
-        android:minHeight="48dp"
-        android:orientation="horizontal">
-
-        <EditText
-            android:id="@+id/edittext_chatbox"
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_gravity="center"
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/reyclerview_message_list"
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
             android:layout_weight="1"
-            android:background="#424242"
-            android:hint="Enter message"
-            android:maxLines="6"
-            android:padding="10dp"
-            android:textColor="@color/colorFont"
-            android:textColorHint="@color/colorHintText" />
+            android:overScrollMode="never"
+            android:paddingBottom="5dp" />
 
         <View
-            android:layout_width="1dp"
-            android:layout_height="match_parent"
-            android:background="#FFFFFF" />
+            android:id="@+id/view_1"
+            android:layout_width="match_parent"
+            android:layout_height="2dp"
+            android:layout_marginBottom="0dp"
+            android:background="#dfdfdf" />
 
-        <TextView
-            android:layout_width="64dp"
-            android:layout_height="48dp"
-            android:layout_gravity="bottom"
-            android:background="#D7263D"
-            android:clickable="true"
-            android:gravity="center"
-            android:onClick="sendMessage"
-            android:text="SEND"
-            android:textColor="@color/colorFont"
-            android:textColorHint="@color/colorHintText"
-            android:textSize="14sp" />
+        <LinearLayout
+            android:id="@+id/layout_chatbox"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="#D84315"
+            android:minHeight="48dp"
+            android:orientation="horizontal">
 
+            <EditText
+                android:id="@+id/edittext_chatbox"
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_gravity="center"
+                android:layout_weight="1"
+                android:background="#424242"
+                android:hint="Enter message"
+                android:maxLines="6"
+                android:padding="10dp"
+                android:textColor="@color/colorFont"
+                android:textColorHint="@color/colorHintText" />
+
+            <View
+                android:layout_width="1dp"
+                android:layout_height="match_parent"
+                android:background="#FFFFFF" />
+
+            <TextView
+                android:layout_width="64dp"
+                android:layout_height="48dp"
+                android:layout_gravity="bottom"
+                android:background="#D7263D"
+                android:clickable="true"
+                android:gravity="center"
+                android:onClick="sendMessage"
+                android:text="SEND"
+                android:textColor="@color/colorFont"
+                android:textColorHint="@color/colorHintText"
+                android:textSize="14sp" />
+
+        </LinearLayout>
     </LinearLayout>
 
-</LinearLayout>
+    <com.skyfishjy.library.RippleBackground
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:id="@+id/app_icon_image"
+        app:rb_color="#3689c2"
+        app:rb_radius="32dp"
+        app:rb_rippleAmount="6"
+        app:rb_duration="2500"
+        app:rb_scale="6"
+        android:onClick="hideIcon">
+
+        <ImageView
+            android:id="@+id/app_icon_image_inside"
+            android:layout_width="160dp"
+            android:layout_height="160dp"
+            android:layout_centerInParent="true"
+            android:src="@drawable/app_icon" />
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:padding="10dp"
+            android:layout_centerHorizontal="true"
+            android:textSize="20sp"
+            android:textColor="@android:color/black"
+            android:layout_below="@id/app_icon_image_inside"
+            android:text="Start interacting with Robin. Say Hi!" />
+
+    </com.skyfishjy.library.RippleBackground>
+
+</RelativeLayout>
