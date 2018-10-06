@@ -3,7 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/background"
+    android:background="@color/background_1"
     tools:context="com.example.robin.LoginActivity">
 
     <ImageView
@@ -13,7 +13,7 @@
         android:layout_centerHorizontal="true"
         android:layout_marginTop="30dp"
         android:scaleType="center"
-        android:src="@drawable/app_icon" />
+        android:src="@drawable/app_icon_small" />
 
     <TextView
         android:id="@+id/text_appname"
@@ -23,7 +23,7 @@
         android:layout_centerHorizontal="true"
         android:padding="10dp"
         android:text="ROBIN "
-        android:textColor="@color/colorFont"
+        android:textColor="@color/colorTitleFont"
         android:textSize="45sp"
         android:textStyle="bold" />
 
@@ -68,17 +68,6 @@
         android:onClick="login"
         android:padding="10dp"
         android:text="LOGIN"
-        android:textStyle="bold" />
-
-    <TextView
-        android:layout_alignParentBottom="true"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:padding="@dimen/mic_button_halo_radius_min"
-        android:layout_centerHorizontal="true"
-        android:text="Not yet registered? Sign up now!"
-        android:textSize="18sp"
-        android:textColor="@color/colorAccent"
         android:textStyle="bold" />
 
 </RelativeLayout>

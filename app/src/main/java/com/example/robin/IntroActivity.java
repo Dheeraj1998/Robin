@@ -56,7 +56,7 @@ public class IntroActivity extends MaterialIntroActivity {
 
     @Override
     public void onFinish() {
-        Intent temp = new Intent(this, ChatActivity.class);
+        Intent temp = new Intent(this, LoginActivity.class);
         startActivity(temp);
         finish();
     }

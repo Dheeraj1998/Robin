@@ -3,11 +3,11 @@
     <color name="colorPrimary">#8FBFE0</color>
     <color name="colorPrimaryDark">#3689c2</color>
     <color name="colorAccent">#CFD8DC</color>
+    <color name="colorTitleFont">#313B72</color>
     <color name="colorFont">#FDFDFD</color>
     <color name="colorHintText">#FFF9C4</color>
-    <color name="colorButton">#FFEB3B</color>
-    <color name="colorButtonSecondary">#FF9800</color>
-    <color name="splashScreen">#191919</color>
+    <color name="colorButton">#EDFFAB</color>
+    <color name="colorTimeTable">#44AF69</color>
 
     <color name="background_1">#8FBFE0</color>
     <color name="background_dk_1">#3689c2</color>

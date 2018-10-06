@@ -19,7 +19,6 @@
         android:background="@drawable/rounded_rectangle_orange"
         android:maxWidth="240dp"
         android:padding="8dp"
-        android:text="hi man, how are you?"
         android:textColor="#ffffff" />
 
 </LinearLayout>

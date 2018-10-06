@@ -4,6 +4,7 @@ import android.app.AlarmManager;
 import android.app.PendingIntent;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.graphics.Typeface;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -22,6 +23,8 @@ import android.widget.Toast;
 import com.skyfishjy.library.RippleBackground;
 
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.List;
 import java.util.Random;
 
@@ -36,6 +39,7 @@ import bsh.EvalError;
 import bsh.Interpreter;
 
 public class ChatActivity extends AppCompatActivity implements TextToSpeech.OnInitListener {
+    //region Variable declaration
     private LinearLayout chat_activity;
     private List<Message> messageList = new ArrayList<>();
     private MessageAdapter mAdapter;
@@ -47,7 +51,9 @@ public class ChatActivity extends AppCompatActivity implements TextToSpeech.OnIn
 
     private PendingIntent pendingIntent;
     private AlarmManager alarmManager;
+    //endregion
 
+    //region onCreate Function
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -71,10 +77,23 @@ public class ChatActivity extends AppCompatActivity implements TextToSpeech.OnIn
         recyclerView.setLayoutManager(mLayoutManager);
         recyclerView.setAdapter(mAdapter);
 
+        //region Code-block for setting up custom font
+        Typeface text_font = Typeface.createFromAsset(getAssets(), "fonts/Quicksand-Regular.otf");
+
+        TextView send_message = (TextView) findViewById(R.id.send_message);
+        TextView welcome_message = (TextView) findViewById(R.id.welcome_message);
+
+        message_entered.setTypeface(text_font);
+        welcome_message.setTypeface(text_font);
+
+        text_font = Typeface.createFromAsset(getAssets(), "fonts/Quicksand-Bold.otf");
+        send_message.setTypeface(text_font);
+        //endregion
+
         historyPreferences = getApplicationContext().getSharedPreferences("ChatHistory", 0);
         getChatHistory();
     }
-
+    //endregion
 
     //region Function for hiding the app icon on Chat Activity
     public void hideIcon(View view){
@@ -149,8 +168,10 @@ public class ChatActivity extends AppCompatActivity implements TextToSpeech.OnIn
                 //endregion
 
                 //region Code-block for sending the message to RecyclerView
-                messageList.add(temp);
-                mAdapter.notifyDataSetChanged();
+                if (!message_content.equals("Error.")) {
+                    messageList.add(temp);
+                    mAdapter.notifyDataSetChanged();
+                }
                 //endregion
             }
         }
@@ -210,6 +231,7 @@ public class ChatActivity extends AppCompatActivity implements TextToSpeech.OnIn
     }
     //endregion
 
+    //region Function for dealing with the sent messages
     public void sendMessage(View view) {
         final AIConfiguration config = new AIConfiguration("6a7700325a904163a44467c8a7f760e0",
                 AIConfiguration.SupportedLanguages.English,
@@ -317,7 +339,7 @@ public class ChatActivity extends AppCompatActivity implements TextToSpeech.OnIn
             }
         }
 
-        //region ASync task for handling the task of setting up the API.AI query
+        //region Code-block for handling the task of setting up the API.AI query
         final AsyncTask<AIRequest, Integer, AIResponse> task =
                 new AsyncTask<AIRequest, Integer, AIResponse>() {
                     private AIError aiError;
@@ -348,24 +370,34 @@ public class ChatActivity extends AppCompatActivity implements TextToSpeech.OnIn
         task.execute(aiRequest);
         //endregion
     }
+    //endregion
 
+    //region Function for dealing with response
     public void onResult(final AIResponse response) {
         final Result result = response.getResult();
-        final String speech = result.getFulfillment().getSpeech();
+        String speech = result.getFulfillment().getSpeech();
 
-        // Check if the action is 'alarm.set'
+        //region 'alarm.set' Action
         if (result.getAction().equals("alarm.set")) {
             AlarmManager alarmManager = (AlarmManager) getSystemService(ALARM_SERVICE);
             Intent myIntent = new Intent(ChatActivity.this, AlarmReceiver.class);
             PendingIntent pendingIntent = PendingIntent.getBroadcast(ChatActivity.this, 0, myIntent, 0);
 
             alarmManager.setExact(AlarmManager.RTC_WAKEUP, result.getTimeParameter("time").getTime(), pendingIntent);
-        } else if (result.getAction().equals("web.search")) {
+        }
+        //endregion
+
+        //region 'web.search' Action
+        else if (result.getAction().equals("web.search")) {
             Uri uri = Uri.parse("http://www.google.com/#q=" + result.getStringParameter("q"));
 
             Intent intent = new Intent(Intent.ACTION_VIEW, uri);
             startActivity(intent);
-        } else if (result.getAction().equals("launch.app")) {
+        }
+        //endregion
+
+        //region 'launch.app' Action
+        else if (result.getAction().equals("launch.app")) {
             String app_name = result.getStringParameter("app_name").toLowerCase();
 
             // Open gallery
@@ -393,19 +425,31 @@ public class ChatActivity extends AppCompatActivity implements TextToSpeech.OnIn
             if (app_name.equals("app store") || app_name.equals("playstore")) {
                 startActivity(new Intent(Intent.ACTION_VIEW, Uri.parse("https://play.google.com/store/apps")));
             }
-        } else if (result.getAction().equals("change.background")) {
+        }
+        //endregion
+
+        //region 'change.background' Action
+        else if (result.getAction().equals("change.background")) {
             final int random = new Random().nextInt(10);
             changeBackground(random);
 
             SharedPreferences.Editor historyEditor = historyPreferences.edit();
             historyEditor.putInt("background_color", random);
             historyEditor.apply();
-        } else if (result.getAction().equals("navigate.place")) {
+        }
+        //endregion
+
+        //region 'navigate.place' Action
+        else if (result.getAction().equals("navigate.place")) {
             Uri gmmIntentUri = Uri.parse("google.navigation:q=" + result.getStringParameter("geo-city"));
             Intent mapIntent = new Intent(Intent.ACTION_VIEW, gmmIntentUri);
             mapIntent.setPackage("com.google.android.apps.maps");
             startActivity(mapIntent);
-        } else if (result.getAction().equals("remember.this")) {
+        }
+        //endregion
+
+        //region 'remember.this' Action
+        else if (result.getAction().equals("remember.this")) {
             SharedPreferences preferences = getApplicationContext().getSharedPreferences("RememberItems", 0);
             SharedPreferences.Editor editor = preferences.edit();
 
@@ -413,6 +457,51 @@ public class ChatActivity extends AppCompatActivity implements TextToSpeech.OnIn
             editor.putString("remember_message", query_message);
             editor.apply();
         }
+        //endregion
+
+        //region 'check.timetable' Action
+        else if (result.getAction().equals("check.timetable")) {
+            SharedPreferences timetablePreferences = getApplicationContext().getSharedPreferences("TimeTable", 0);
+
+            Date tt_date = result.getDateParameter("date");
+            Calendar cal = Calendar.getInstance();
+            cal.setTime(tt_date);
+
+            int day = cal.get(Calendar.DAY_OF_WEEK);
+            String all_slots[] = {"A1", "F1", "D1", "TB1", "TG1", "A2", "F2", "D2", "TB2", "TG2",
+                    "B1", "G1", "E1", "TC1", "TAA1", "B2", "G2", "E2", "TC2", "TAA2",
+                    "C1", "A1", "F1", "TD1", "V2", "C2", "A2", "F2", "TD2", "TBB2",
+                    "D1", "B1", "G1", "TE1", "TCC1", "D2", "B2", "G2", "TE2", "TCC2",
+                    "E1", "C1", "TA1", "TF1", "TD1", "E2", "C2", "TA2", "TF2", "TDD2"};
+
+            if (day == 1 || day == 7) {
+                speech = "You have no classes.";
+            } else {
+                speech = "You have classes in the following slots: \n";
+                int total_count = 0;
+
+                for(int i = (day - 2) * 10 + 1; i <= (day - 1) * 10; i++) {
+                    if (timetablePreferences.getBoolean("tt_" + i, false)) {
+                        speech = speech + all_slots[i - 1] + " ";
+                        total_count++;
+                    }
+                }
+
+                if (total_count != 0) {
+                    speech = speech + "\nYou have a total of " + total_count + " hours of class.";
+                } else {
+                    speech = "You have no classes";
+                }
+            }
+        }
+        //endregion
+
+        //region 'setup.timetable' Action
+        else if (result.getAction().equals("setup.timetable")) {
+            Intent temp = new Intent(ChatActivity.this, TimeTableActivity.class);
+            startActivity(temp);
+        }
+        //endregion
 
         Message temp = new Message();
         temp.setMessage_content(speech);
@@ -425,7 +514,9 @@ public class ChatActivity extends AppCompatActivity implements TextToSpeech.OnIn
         mAdapter.notifyDataSetChanged();
         storeChatHistory(2, speech);
     }
+    //endregion
 
+    //region Default functions
     public void onError(final AIError error) {
         Log.i("custom", "Resolved query: " + error.getMessage());
     }
@@ -434,4 +525,5 @@ public class ChatActivity extends AppCompatActivity implements TextToSpeech.OnIn
     public void onInit(int status) {
 
     }
+    //endregion
 }

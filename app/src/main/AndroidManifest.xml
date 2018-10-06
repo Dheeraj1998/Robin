@@ -11,29 +11,30 @@
         android:label="@string/app_name"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-
         <activity
             android:name=".LoginActivity"
             android:screenOrientation="portrait"
-            android:theme="@style/SplashScreenTheme">
-        </activity>
-
+            android:theme="@style/SplashScreenTheme" />
         <activity
             android:name=".ChatActivity"
             android:screenOrientation="portrait"
             android:theme="@style/FullScreenTheme" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
+
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-
         <activity
             android:name=".IntroActivity"
-            android:theme="@style/SplashScreenTheme" >
+            android:theme="@style/SplashScreenTheme">
         </activity>
 
         <receiver android:name=".AlarmReceiver" />
+
+        <activity android:name=".TimeTableActivity"
+            android:theme="@style/FullScreenTheme"
+            android:screenOrientation="landscape" />
     </application>
 
 </manifest>
