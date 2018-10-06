@@ -256,7 +256,7 @@
             android:layout_weight="1"
             android:background="@color/background_3"
             android:padding="10dp"
-            android:text="A1"
+            android:text="C1"
 
             android:textAlignment="center" />
 
@@ -267,7 +267,7 @@
             android:layout_weight="1"
             android:background="@color/background_3"
             android:padding="10dp"
-            android:text="F1"
+            android:text="A1"
 
             android:textAlignment="center" />
 
@@ -278,7 +278,7 @@
             android:layout_weight="1"
             android:background="@color/background_3"
             android:padding="10dp"
-            android:text="D1"
+            android:text="F1"
 
             android:textAlignment="center" />
 
@@ -289,7 +289,7 @@
             android:layout_weight="1"
             android:background="@color/background_3"
             android:padding="10dp"
-            android:text="TB1"
+            android:text="V1"
 
             android:textAlignment="center" />
 
@@ -300,7 +300,7 @@
             android:layout_weight="1"
             android:background="@color/background_3"
             android:padding="10dp"
-            android:text="TG1"
+            android:text="V2"
 
             android:textAlignment="center" />
 
@@ -311,7 +311,7 @@
             android:layout_weight="1"
             android:background="@color/background_3"
             android:padding="10dp"
-            android:text="A2"
+            android:text="C2"
 
             android:textAlignment="center" />
 
@@ -322,7 +322,7 @@
             android:layout_weight="1"
             android:background="@color/background_3"
             android:padding="10dp"
-            android:text="F2"
+            android:text="A2"
 
             android:textAlignment="center" />
 
@@ -333,7 +333,7 @@
             android:layout_weight="1"
             android:background="@color/background_3"
             android:padding="10dp"
-            android:text="D2"
+            android:text="F2"
 
             android:textAlignment="center" />
 
@@ -344,7 +344,7 @@
             android:layout_weight="1"
             android:background="@color/background_3"
             android:padding="10dp"
-            android:text="TB2"
+            android:text="TD2"
 
             android:textAlignment="center" />
 
@@ -355,7 +355,7 @@
             android:layout_weight="1"
             android:background="@color/background_3"
             android:padding="10dp"
-            android:text="TG2"
+            android:text="TBB2"
 
             android:textAlignment="center" />
     </LinearLayout>
@@ -373,7 +373,7 @@
             android:layout_weight="1"
             android:background="@color/background_3"
             android:padding="10dp"
-            android:text="A1"
+            android:text="D1"
 
             android:textAlignment="center" />
 
@@ -384,7 +384,7 @@
             android:layout_weight="1"
             android:background="@color/background_3"
             android:padding="10dp"
-            android:text="F1"
+            android:text="B1"
 
             android:textAlignment="center" />
 
@@ -395,7 +395,7 @@
             android:layout_weight="1"
             android:background="@color/background_3"
             android:padding="10dp"
-            android:text="D1"
+            android:text="G1"
 
             android:textAlignment="center" />
 
@@ -406,7 +406,7 @@
             android:layout_weight="1"
             android:background="@color/background_3"
             android:padding="10dp"
-            android:text="TB1"
+            android:text="TE1"
 
             android:textAlignment="center" />
 
@@ -417,7 +417,7 @@
             android:layout_weight="1"
             android:background="@color/background_3"
             android:padding="10dp"
-            android:text="TG1"
+            android:text="TCC1"
 
             android:textAlignment="center" />
 
@@ -428,7 +428,7 @@
             android:layout_weight="1"
             android:background="@color/background_3"
             android:padding="10dp"
-            android:text="A2"
+            android:text="D2"
 
             android:textAlignment="center" />
 
@@ -439,7 +439,7 @@
             android:layout_weight="1"
             android:background="@color/background_3"
             android:padding="10dp"
-            android:text="F2"
+            android:text="B2"
 
             android:textAlignment="center" />
 
@@ -450,7 +450,7 @@
             android:layout_weight="1"
             android:background="@color/background_3"
             android:padding="10dp"
-            android:text="D2"
+            android:text="G2"
 
             android:textAlignment="center" />
 
@@ -461,7 +461,7 @@
             android:layout_weight="1"
             android:background="@color/background_3"
             android:padding="10dp"
-            android:text="TB2"
+            android:text="TE2"
 
             android:textAlignment="center" />
 
@@ -472,7 +472,7 @@
             android:layout_weight="1"
             android:background="@color/background_3"
             android:padding="10dp"
-            android:text="TG2"
+            android:text="TCC2"
 
             android:textAlignment="center" />
     </LinearLayout>
@@ -490,7 +490,7 @@
             android:layout_weight="1"
             android:background="@color/background_3"
             android:padding="10dp"
-            android:text="A1"
+            android:text="E1"
 
             android:textAlignment="center" />
 
@@ -501,7 +501,7 @@
             android:layout_weight="1"
             android:background="@color/background_3"
             android:padding="10dp"
-            android:text="F1"
+            android:text="C1"
 
             android:textAlignment="center" />
 
@@ -512,7 +512,7 @@
             android:layout_weight="1"
             android:background="@color/background_3"
             android:padding="10dp"
-            android:text="D1"
+            android:text="TA1"
 
             android:textAlignment="center" />
 
@@ -523,7 +523,7 @@
             android:layout_weight="1"
             android:background="@color/background_3"
             android:padding="10dp"
-            android:text="TB1"
+            android:text="TF1"
 
             android:textAlignment="center" />
 
@@ -534,7 +534,7 @@
             android:layout_weight="1"
             android:background="@color/background_3"
             android:padding="10dp"
-            android:text="TG1"
+            android:text="TD1"
 
             android:textAlignment="center" />
 
@@ -545,7 +545,7 @@
             android:layout_weight="1"
             android:background="@color/background_3"
             android:padding="10dp"
-            android:text="A2"
+            android:text="E2"
 
             android:textAlignment="center" />
 
@@ -556,7 +556,7 @@
             android:layout_weight="1"
             android:background="@color/background_3"
             android:padding="10dp"
-            android:text="F2"
+            android:text="C2"
 
             android:textAlignment="center" />
 
@@ -567,7 +567,7 @@
             android:layout_weight="1"
             android:background="@color/background_3"
             android:padding="10dp"
-            android:text="D2"
+            android:text="TA2"
 
             android:textAlignment="center" />
 
@@ -578,7 +578,7 @@
             android:layout_weight="1"
             android:background="@color/background_3"
             android:padding="10dp"
-            android:text="TB2"
+            android:text="TF2"
 
             android:textAlignment="center" />
 
@@ -589,7 +589,7 @@
             android:layout_weight="1"
             android:background="@color/background_3"
             android:padding="10dp"
-            android:text="TG2"
+            android:text="TDD2"
 
             android:textAlignment="center" />
     </LinearLayout>

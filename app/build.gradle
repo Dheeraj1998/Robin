@@ -30,12 +30,14 @@ dependencies {
     })
     compile 'com.android.support:appcompat-v7:25.0.1'
     compile 'com.android.support:recyclerview-v7:25.0.1'
+    compile 'agency.tango.android:material-intro-screen:0.0.5'
     compile 'ai.api:sdk:2.0.7@aar'
     compile 'ai.api:libai:1.4.8'
+    compile 'commons-io:commons-io:2.4'
     compile 'com.google.code.gson:gson:2.7'
     compile 'com.skyfishjy.ripplebackground:library:1.0.1'
-    compile 'commons-io:commons-io:2.4'
-    compile 'agency.tango.android:material-intro-screen:0.0.5'
+    compile 'com.victor:lib:1.0.4'
+
     testCompile 'junit:junit:4.12'
     compile files('libs/bsh-core-2.0b4.jar')
 }

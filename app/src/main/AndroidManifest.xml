@@ -21,7 +21,6 @@
             android:theme="@style/FullScreenTheme" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
-
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
@@ -33,8 +32,8 @@
         <receiver android:name=".AlarmReceiver" />
 
         <activity android:name=".TimeTableActivity"
-            android:theme="@style/FullScreenTheme"
-            android:screenOrientation="landscape" />
+            android:screenOrientation="landscape"
+            android:theme="@style/FullScreenTheme" />
     </application>
 
 </manifest>
