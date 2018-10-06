@@ -38,12 +38,12 @@ import bsh.Interpreter;
 public class ChatActivity extends AppCompatActivity implements TextToSpeech.OnInitListener {
     private LinearLayout chat_activity;
     private List<Message> messageList = new ArrayList<>();
-    private RecyclerView recyclerView;
     private MessageAdapter mAdapter;
     private TextView message_entered;
     private TextToSpeech tts;
     private String query_message;
-    private Interpreter interpreter;
+
+    private SharedPreferences historyPreferences;
 
     private PendingIntent pendingIntent;
     private AlarmManager alarmManager;
@@ -62,7 +62,7 @@ public class ChatActivity extends AppCompatActivity implements TextToSpeech.OnIn
         tts.setSpeechRate(Float.parseFloat("0.8"));
 
         message_entered = (TextView) findViewById(R.id.edittext_chatbox);
-        recyclerView = (RecyclerView) findViewById(R.id.reyclerview_message_list);
+        RecyclerView recyclerView = (RecyclerView) findViewById(R.id.reyclerview_message_list);
 
         alarmManager = (AlarmManager) getSystemService(ALARM_SERVICE);
 
@@ -70,8 +70,13 @@ public class ChatActivity extends AppCompatActivity implements TextToSpeech.OnIn
         RecyclerView.LayoutManager mLayoutManager = new LinearLayoutManager(getApplicationContext());
         recyclerView.setLayoutManager(mLayoutManager);
         recyclerView.setAdapter(mAdapter);
+
+        historyPreferences = getApplicationContext().getSharedPreferences("ChatHistory", 0);
+        getChatHistory();
     }
 
+
+    //region Function for hiding the app icon on Chat Activity
     public void hideIcon(View view){
         final RippleBackground rippleBackground = (RippleBackground) findViewById(R.id.app_icon_image);
         Animation animFadeOut = AnimationUtils.loadAnimation(getApplicationContext(),R.anim.fade_out);
@@ -97,6 +102,14 @@ public class ChatActivity extends AppCompatActivity implements TextToSpeech.OnIn
         rippleBackground.startAnimation(animFadeOut);
     }
 
+    public void hideIcon(View view, boolean fast){
+        final RippleBackground rippleBackground = (RippleBackground) findViewById(R.id.app_icon_image);
+        rippleBackground.setVisibility(View.GONE);
+        rippleBackground.stopRippleAnimation();
+    }
+    //endregion
+
+    //region onDestroy Function
     @Override
     public void onDestroy() {
         if (tts != null) {
@@ -105,6 +118,97 @@ public class ChatActivity extends AppCompatActivity implements TextToSpeech.OnIn
         }
         super.onDestroy();
     }
+    //endregion
+
+    //region Function for retrieving the chat-history
+    public void getChatHistory(){
+        int totalMessageCount = historyPreferences.getInt("total_count", 0);
+
+        if(totalMessageCount != 0){
+            hideIcon(getCurrentFocus(), true);
+            int backgroundColor = historyPreferences.getInt("background_color", 0);
+            changeBackground(backgroundColor);
+
+            for(int i = 1; i <= totalMessageCount; i++){
+
+                //region Code-block for building the appropriate message
+                Message temp = new Message();
+                String message_content;
+
+                if (i % 2 != 0) {
+                    message_content = historyPreferences.getString(i + "_sent", "Error.");
+                    temp.setMessage_type(1);
+                }
+
+                else {
+                    message_content = historyPreferences.getString(i + "_receive", "Error.");
+                    temp.setMessage_type(2);
+                }
+
+                temp.setMessage_content(message_content);
+                //endregion
+
+                //region Code-block for sending the message to RecyclerView
+                messageList.add(temp);
+                mAdapter.notifyDataSetChanged();
+                //endregion
+            }
+        }
+    }
+    //endregion
+
+    //region Function for storing the chat-history
+    public void storeChatHistory(int type, String message){
+        int totalMessageCount = historyPreferences.getInt("total_count", 0);
+        SharedPreferences.Editor historyEditor = historyPreferences.edit();
+
+        if (type == 1) {
+            historyEditor.putString((totalMessageCount + 1) + "_sent", message);
+        }
+
+        else {
+            historyEditor.putString((totalMessageCount + 1) + "_receive", message);
+        }
+        historyEditor.putInt("total_count", totalMessageCount + 1);
+        historyEditor.apply();
+    }
+    //endregion
+
+    //region Function for changing the background
+    public void changeBackground(int random){
+        if (random == 0) {
+            chat_activity.setBackgroundResource(R.color.background_1);
+            getWindow().setStatusBarColor(getResources().getColor(R.color.background_dk_1));
+        } else if (random == 1) {
+            chat_activity.setBackgroundResource(R.color.background_2);
+            getWindow().setStatusBarColor(getResources().getColor(R.color.background_dk_2));
+        } else if (random == 2) {
+            chat_activity.setBackgroundResource(R.color.background_3);
+            getWindow().setStatusBarColor(getResources().getColor(R.color.background_dk_3));
+        } else if (random == 3) {
+            chat_activity.setBackgroundResource(R.color.background_4);
+            getWindow().setStatusBarColor(getResources().getColor(R.color.background_dk_4));
+        } else if (random == 4) {
+            chat_activity.setBackgroundResource(R.color.background_5);
+            getWindow().setStatusBarColor(getResources().getColor(R.color.background_dk_5));
+        } else if (random == 5) {
+            chat_activity.setBackgroundResource(R.color.background_6);
+            getWindow().setStatusBarColor(getResources().getColor(R.color.background_dk_6));
+        } else if (random == 6) {
+            chat_activity.setBackgroundResource(R.color.background_7);
+            getWindow().setStatusBarColor(getResources().getColor(R.color.background_dk_7));
+        } else if (random == 7) {
+            chat_activity.setBackgroundResource(R.color.background_8);
+            getWindow().setStatusBarColor(getResources().getColor(R.color.background_dk_8));
+        } else if (random == 8) {
+            chat_activity.setBackgroundResource(R.color.background_9);
+            getWindow().setStatusBarColor(getResources().getColor(R.color.background_dk_9));
+        } else if (random == 9) {
+            chat_activity.setBackgroundResource(R.color.background_10);
+            getWindow().setStatusBarColor(getResources().getColor(R.color.background_dk_10));
+        }
+    }
+    //endregion
 
     public void sendMessage(View view) {
         final AIConfiguration config = new AIConfiguration("6a7700325a904163a44467c8a7f760e0",
@@ -115,103 +219,105 @@ public class ChatActivity extends AppCompatActivity implements TextToSpeech.OnIn
 
         query_message = message_entered.getText().toString();
 
+        //region Code-block for hiding the icon on chatting
         final RippleBackground rippleBackground = (RippleBackground) findViewById(R.id.app_icon_image);
         if (rippleBackground.getVisibility() != View.GONE) {
             hideIcon(getCurrentFocus());
         }
+        //endregion
 
         if (query_message.length() == 0) {
             Toast.makeText(getApplicationContext(), "Enter something!", Toast.LENGTH_SHORT).show();
-        } else if (query_message.equalsIgnoreCase("what did you remember")) {
-            Message temp = new Message();
-            temp.setMessage_content(query_message);
-            temp.setMessage_type(1);
-            messageList.add(temp);
-
-            mAdapter.notifyDataSetChanged();
-
-            SharedPreferences preferences = getApplicationContext().getSharedPreferences("RememberItems", 0);
-            String speech = preferences.getString("remember_message", "No, I don't think you asked me to remember anything.");
-
-            if(!speech.equals("No, I don't think you asked me to remember anything.")){
-                speech = "You asked me to remember this: \n\n" + speech;
-            }
-
-            temp = new Message();
-            temp.setMessage_content(speech);
-            temp.setMessage_type(2);
-            messageList.add(temp);
-
-            tts.speak(speech, TextToSpeech.QUEUE_FLUSH, null);
-            message_entered.setText("");
-
-            mAdapter.notifyDataSetChanged();
-        } else if (query_message.equalsIgnoreCase("forget")) {
-            Message temp = new Message();
-            temp.setMessage_content(query_message);
-            temp.setMessage_type(1);
-            messageList.add(temp);
-
-            mAdapter.notifyDataSetChanged();
-
-            SharedPreferences preferences = getApplicationContext().getSharedPreferences("RememberItems", 0);
-            SharedPreferences.Editor editor = preferences.edit();
-
-            editor.clear();
-            String speech = "I have forgot!";
-            editor.apply();
-
-            temp = new Message();
-            temp.setMessage_content(speech);
-            temp.setMessage_type(2);
-            messageList.add(temp);
-
-            tts.speak(speech, TextToSpeech.QUEUE_FLUSH, null);
-            message_entered.setText("");
-
-            mAdapter.notifyDataSetChanged();
-        } else if (query_message.startsWith("calculate") || query_message.startsWith("Calculate")) {
-            String speech;
-            setTheme(R.style.SplashScreenTheme);
-
-            Message temp = new Message();
-            temp.setMessage_content(query_message);
-            temp.setMessage_type(1);
-            messageList.add(temp);
-
-            mAdapter.notifyDataSetChanged();
-
-            interpreter = new Interpreter();
-
-            try {
-                String eval_expression = query_message.substring(9).trim();
-                interpreter.eval("result = " + eval_expression);
-                speech = "The result is: " + interpreter.get("result");
-            } catch (EvalError evalError) {
-                speech = "The entered expression is invalid!";
-                evalError.printStackTrace();
-            }
-
-            temp = new Message();
-            temp.setMessage_content(speech);
-            temp.setMessage_type(2);
-            messageList.add(temp);
-
-            tts.speak(speech, TextToSpeech.QUEUE_FLUSH, null);
-            message_entered.setText("");
-
-            mAdapter.notifyDataSetChanged();
         } else {
             Message temp = new Message();
             temp.setMessage_content(query_message);
             temp.setMessage_type(1);
             messageList.add(temp);
 
-            aiRequest.setQuery(query_message);
             mAdapter.notifyDataSetChanged();
+            storeChatHistory(1, query_message);
+
+            if (query_message.equalsIgnoreCase("clear history")) {
+                SharedPreferences.Editor historyEditor = historyPreferences.edit();
+                historyEditor.clear();
+                historyEditor.apply();
+
+                String speech = "The history has been cleared.";
+                temp = new Message();
+                temp.setMessage_content(speech);
+                temp.setMessage_type(2);
+                messageList.add(temp);
+
+                tts.speak(speech, TextToSpeech.QUEUE_FLUSH, null);
+                message_entered.setText("");
+
+                mAdapter.notifyDataSetChanged();
+            } else if (query_message.equalsIgnoreCase("what did you remember")) {
+                SharedPreferences preferences = getApplicationContext().getSharedPreferences("RememberItems", 0);
+                String speech = preferences.getString("remember_message", "No, I don't think you asked me to remember anything.");
+
+                if(!speech.equals("No, I don't think you asked me to remember anything.")){
+                    speech = "You asked me to remember this: \n\n" + speech;
+                }
+
+                temp = new Message();
+                temp.setMessage_content(speech);
+                temp.setMessage_type(2);
+                messageList.add(temp);
+
+                tts.speak(speech, TextToSpeech.QUEUE_FLUSH, null);
+                message_entered.setText("");
+
+                mAdapter.notifyDataSetChanged();
+                storeChatHistory(2, speech);
+            } else if (query_message.equalsIgnoreCase("forget")) {
+                SharedPreferences preferences = getApplicationContext().getSharedPreferences("RememberItems", 0);
+                SharedPreferences.Editor editor = preferences.edit();
+
+                editor.clear();
+                String speech = "I have forgot!";
+                editor.apply();
+
+                temp = new Message();
+                temp.setMessage_content(speech);
+                temp.setMessage_type(2);
+                messageList.add(temp);
+
+                tts.speak(speech, TextToSpeech.QUEUE_FLUSH, null);
+                message_entered.setText("");
+
+                mAdapter.notifyDataSetChanged();
+                storeChatHistory(2, speech);
+            } else if (query_message.startsWith("calculate") || query_message.startsWith("Calculate")) {
+                String speech;
+
+                Interpreter interpreter = new Interpreter();
+
+                try {
+                    String eval_expression = query_message.substring(9).trim();
+                    interpreter.eval("result = " + eval_expression);
+                    speech = "The result is: " + interpreter.get("result");
+                } catch (EvalError evalError) {
+                    speech = "The entered expression is invalid!";
+                    evalError.printStackTrace();
+                }
+
+                temp = new Message();
+                temp.setMessage_content(speech);
+                temp.setMessage_type(2);
+                messageList.add(temp);
+
+                tts.speak(speech, TextToSpeech.QUEUE_FLUSH, null);
+                message_entered.setText("");
+
+                mAdapter.notifyDataSetChanged();
+                storeChatHistory(2, speech);
+            } else {
+                aiRequest.setQuery(query_message);
+            }
         }
 
-        // This is the ASync task for handling the task of setting up the API.AI query
+        //region ASync task for handling the task of setting up the API.AI query
         final AsyncTask<AIRequest, Integer, AIResponse> task =
                 new AsyncTask<AIRequest, Integer, AIResponse>() {
                     private AIError aiError;
@@ -240,6 +346,7 @@ public class ChatActivity extends AppCompatActivity implements TextToSpeech.OnIn
                     }
                 };
         task.execute(aiRequest);
+        //endregion
     }
 
     public void onResult(final AIResponse response) {
@@ -288,38 +395,11 @@ public class ChatActivity extends AppCompatActivity implements TextToSpeech.OnIn
             }
         } else if (result.getAction().equals("change.background")) {
             final int random = new Random().nextInt(10);
+            changeBackground(random);
 
-            if (random == 0) {
-                chat_activity.setBackgroundResource(R.color.background_1);
-                getWindow().setStatusBarColor(getResources().getColor(R.color.background_dk_1));
-            } else if (random == 1) {
-                chat_activity.setBackgroundResource(R.color.background_2);
-                getWindow().setStatusBarColor(getResources().getColor(R.color.background_dk_2));
-            } else if (random == 2) {
-                chat_activity.setBackgroundResource(R.color.background_3);
-                getWindow().setStatusBarColor(getResources().getColor(R.color.background_dk_3));
-            } else if (random == 3) {
-                chat_activity.setBackgroundResource(R.color.background_4);
-                getWindow().setStatusBarColor(getResources().getColor(R.color.background_dk_4));
-            } else if (random == 4) {
-                chat_activity.setBackgroundResource(R.color.background_5);
-                getWindow().setStatusBarColor(getResources().getColor(R.color.background_dk_5));
-            } else if (random == 5) {
-                chat_activity.setBackgroundResource(R.color.background_6);
-                getWindow().setStatusBarColor(getResources().getColor(R.color.background_dk_6));
-            } else if (random == 6) {
-                chat_activity.setBackgroundResource(R.color.background_7);
-                getWindow().setStatusBarColor(getResources().getColor(R.color.background_dk_7));
-            } else if (random == 7) {
-                chat_activity.setBackgroundResource(R.color.background_8);
-                getWindow().setStatusBarColor(getResources().getColor(R.color.background_dk_8));
-            } else if (random == 8) {
-                chat_activity.setBackgroundResource(R.color.background_9);
-                getWindow().setStatusBarColor(getResources().getColor(R.color.background_dk_9));
-            } else if (random == 9) {
-                chat_activity.setBackgroundResource(R.color.background_10);
-                getWindow().setStatusBarColor(getResources().getColor(R.color.background_dk_10));
-            }
+            SharedPreferences.Editor historyEditor = historyPreferences.edit();
+            historyEditor.putInt("background_color", random);
+            historyEditor.apply();
         } else if (result.getAction().equals("navigate.place")) {
             Uri gmmIntentUri = Uri.parse("google.navigation:q=" + result.getStringParameter("geo-city"));
             Intent mapIntent = new Intent(Intent.ACTION_VIEW, gmmIntentUri);
@@ -343,6 +423,7 @@ public class ChatActivity extends AppCompatActivity implements TextToSpeech.OnIn
         message_entered.setText("");
 
         mAdapter.notifyDataSetChanged();
+        storeChatHistory(2, speech);
     }
 
     public void onError(final AIError error) {
