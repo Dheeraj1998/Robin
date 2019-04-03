@@ -11,7 +11,7 @@ alarms, search on Google and other basic operations like opening the system appl
 <img src="screenshots/screenshot_1.png" width="33%"></img> <img src="screenshots/screenshot_2.png" width="33%"></img> <img src="screenshots/screenshot_3.png" width="33%"></img>
 
 # Walkthrough
-
+Please wait while the GIF loads.
 <p align = "center"><img src="screenshots/walkthrough.gif" align = "center" width="30%"></img></p>
 
 # Functionalities
