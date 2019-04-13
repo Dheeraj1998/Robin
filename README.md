@@ -1,4 +1,5 @@
 # Robin
+<p align = "center"><img src="https://github.com/Dheeraj1998/Robin/blob/master/app/src/main/res/mipmap/ic_launcher.png" width = 10%"></img></p>
 A conversation agent in Android.
 
 # Working
